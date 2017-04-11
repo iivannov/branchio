@@ -1,2 +1,5 @@
-# branchio
-Branch.IO HTTP API client
+# Branch IO HTTP API Client
+
+A simple client for the Branch.io HTTP API
+----------
+

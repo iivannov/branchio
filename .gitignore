@@ -1,0 +1,6 @@
+# Third Party
+/.idea
+/vendor
+
+# Composer
+composer.lock
