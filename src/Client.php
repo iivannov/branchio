@@ -92,21 +92,23 @@ class Client
      *      - Set type to 2 to make a Marketing URL. These are URLs that are displayed under the Marketing tab on the dashboard
      *      - Default is set to 0, which is the standard Branch links created via our SDK.git
      *
-     * @param null $duration
-     *      In seconds. Only set this key if you want to override the match duration for deep link matching.
-     *      This is the time that Branch allows a click to remain outstanding and be eligible to be matched with a new app session.
-     *      This is default set to 7200 (2 hours)
      *
      * @throws \Exception
      */
-    public function createLink($data = null, $alias = null, $type = null, $duration = null)
+    public function createLink($data = null, $alias = null, $type = null)
     {
         $payload = [
             'branch_key' => $this->key,
-            'campaign' => $this->campaign,
-            'channel' => $this->channel,
         ];
 
+
+        if ($this->campaign) {
+            $payload['campaign'] = $this->campaign;
+        }
+
+        if ($this->channel) {
+            $payload['channel'] = $this->channel;
+        }
 
         if ($data) {
             $payload['data'] = $data;
@@ -119,11 +121,6 @@ class Client
         if ($type) {
             $payload['type'] = $type;
         }
-
-        if ($duration) {
-            $payload['duration'] = $duration;
-        }
-
 
         try {
             $response = $this->http->post(self::API_URL . 'url', ['json' => $payload]);
@@ -145,14 +142,20 @@ class Client
     }
 
 
-    public function updateLink($url, $data = null, $type = null, $duration = null)
+    public function updateLink($url, $data = null, $type = null)
     {
         $payload = [
             'branch_key' => $this->key,
             'branch_secret' => $this->secret,
-            'campaign' => $this->campaign,
-            'channel' => $this->channel,
         ];
+
+        if ($this->campaign) {
+            $payload['campaign'] = $this->campaign;
+        }
+
+        if ($this->channel) {
+            $payload['channel'] = $this->channel;
+        }
 
         if ($data) {
             $payload['data'] = $data;
@@ -160,10 +163,6 @@ class Client
 
         if ($type) {
             $payload['type'] = $type;
-        }
-
-        if ($duration) {
-            $payload['duration'] = $duration;
         }
 
         $url = urlencode($url);
