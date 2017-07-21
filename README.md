@@ -21,7 +21,7 @@ $ composer require iivannov/branchio
 
 ### Initialization
 ``` php
-$client = new \Iivannov\Branchio(KEY, SECRET);
+$client = new \Iivannov\Branchio\Client(KEY, SECRET);
 ```
 
 ### Set campaign/channel
@@ -74,4 +74,38 @@ $client->createLink($data, 'MyAlias', \Iivannov\Branchio\Support\UrlType::MARKET
 ### Update link
 ```
 $client->updateLink($url, $data, $type);
+```
+
+
+## Usage with Laravel
+
+If you are using Laravel, the package contains a Service Provider and a Facade for you.
+
+1. First you need to add the ServiceProvider and Facade classes in your `config\app.php`
+
+```
+'providers' => [
+    ...
+    Iivannov\Branchio\Integration\Laravel\BranchioServiceProvider::class,
+];
+
+'aliases' => [
+    ...
+    'Branchio' => Iivannov\Branchio\Integration\Laravel\Facade\Branchio::class
+];
+```
+
+2. Then you need to add your username and password in `config\services.php`
+
+```
+'branchio' => [
+    'key' => YOUR_BRANCHIO_KEY,
+    'secret' => YOUR_BRANCHIO_SECRET
+]
+```
+
+3. You are ready to go, just use it like this:
+
+```
+Branchio::createLink($data, 'MyAlias');
 ```
