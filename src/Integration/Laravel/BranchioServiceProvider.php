@@ -19,7 +19,7 @@ class BranchioServiceProvider extends ServiceProvider
             if (!$key || !$secret)
                 throw new \InvalidArgumentException('Missing BranchIO key and secret in configuration files');
 
-            new \Iivannov\Branchio\Client($key, $secret);
+            return new \Iivannov\Branchio\Client($key, $secret);
         });
     }
 }
