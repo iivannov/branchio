@@ -1,20 +1,10 @@
-#Branch IO HTTP API Client
+# Branch IO HTTP API Client
 
 This is just a simple HTTP client for the Branch Metrics API (Branch.io). 
 At the moment it supports creating, updating and configuring Branch links. A future version will include retrieving data from existing links.
 
 <p>
-
-<a href="https://www.codacy.com/app/iivannov/branchio"><img src="https://img.shields.io/codacy/grade/881f4cf300834a89bc6eba1eb51d93f3.svg" alt="Codacy"></a>
-
-<a href="https://codeclimate.com/github/iivannov/branchio/maintainability"><img src="https://api.codeclimate.com/v1/badges/942e4b5eb5d37f9bd061/maintainability" alt="Maintainability"></a>
-
-<a href="https://packagist.org/packages/iivannov/branchio"><img src="https://img.shields.io/packagist/dt/iivannov/branchio.svg" alt="Packagist"></a> 
-
-<a href="license.md"><img src="https://poser.pugx.org/iivannov/branchio/license" alt="License"></a>
-
-<a href="https://packagist.org/packages/iivannov/branchio"><img src="https://poser.pugx.org/iivannov/branchio/v/stable" alt="Version"></a>
-
+<a href="https://www.codacy.com/app/iivannov/branchio"><img src="https://img.shields.io/codacy/grade/881f4cf300834a89bc6eba1eb51d93f3.svg" alt="Codacy"></a> <a href="https://codeclimate.com/github/iivannov/branchio/maintainability"><img src="https://api.codeclimate.com/v1/badges/942e4b5eb5d37f9bd061/maintainability" alt="Maintainability"></a> <a href="https://packagist.org/packages/iivannov/branchio"><img src="https://img.shields.io/packagist/dt/iivannov/branchio.svg" alt="Packagist"></a> <a href="license.md"><img src="https://poser.pugx.org/iivannov/branchio/license" alt="License"></a> <a href="https://packagist.org/packages/iivannov/branchio"><img src="https://poser.pugx.org/iivannov/branchio/v/stable" alt="Version"></a>
 </p>
 
 
