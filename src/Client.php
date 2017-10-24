@@ -5,6 +5,8 @@ namespace Iivannov\Branchio;
 use GuzzleHttp\Exception\ClientException;
 use Iivannov\Branchio\Exceptions\BranchioDuplicateLinkException;
 use Iivannov\Branchio\Exceptions\BranchioException;
+use Iivannov\Branchio\Exceptions\BranchioForbiddenException;
+use Iivannov\Branchio\Exceptions\BranchioNotFoundException;
 
 class Client
 {
@@ -125,11 +127,7 @@ class Client
         try {
             $response = $this->http->post(self::API_URL . 'url', ['json' => $payload]);
         } catch (ClientException $ex) {
-            if ($ex->getCode() == 409) {
-                throw new BranchioDuplicateLinkException();
-            }
-
-            throw new BranchioException('Unhandled Bad Response', 0, $ex);
+            throw $this->translateClientException($ex);
         }
 
         $result = json_decode($response->getBody()->getContents());
@@ -170,11 +168,23 @@ class Client
         try {
             $this->http->put(self::API_URL . "url?url={$url}", ['json' => $payload]);
         } catch (ClientException $ex) {
-            throw new BranchioException('Unhandled Bad Response', 0, $ex);
+            throw $this->translateClientException($ex);
         }
 
         return true;
     }
 
-
+    private function translateClientException(\Throwable $ex): \Throwable
+    {
+        if ($ex->getCode() == 403) {
+            return new BranchioForbiddenException();
+        }
+        if ($ex->getCode() == 404) {
+            return new BranchioNotFoundException();
+        }
+        if ($ex->getCode() == 409) {
+            return new BranchioDuplicateLinkException();
+        }
+        return BranchioException::makeFromResponse($ex);
+    }
 }
