@@ -75,6 +75,29 @@ class Client
 
 
     /**
+     * Retrieve data from existing link
+     *
+     * @param $url
+     * @return Link
+     * @throws \Throwable
+     */
+    public function getLink($url)
+    {
+        try {
+            $response = $this->http->get(self::API_URL . "url", ['query' => [
+                'url' => $url,
+                'branch_key' => $this->key
+            ]]);
+        } catch (ClientException $ex) {
+            throw $this->translateClientException($ex);
+        }
+
+        $result = json_decode($response->getBody()->getContents());
+
+        return new Link($result);
+    }
+
+    /**
      * Create a single link
      *
      * For detailed information about different options:
