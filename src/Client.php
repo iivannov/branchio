@@ -120,7 +120,7 @@ class Client
      *
      * @throws \Exception
      */
-    public function createLink($data = null, $alias = null, $type = null)
+    public function createLink($data = null, $alias = null, $type = null, $extra = [])
     {
         $payload = [
             'branch_key' => $this->key,
@@ -146,6 +146,8 @@ class Client
         if ($type) {
             $payload['type'] = $type;
         }
+
+        $payload = $payload + $extra;
 
         try {
             $response = $this->http->post(self::API_URL . 'url', ['json' => $payload]);
