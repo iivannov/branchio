@@ -39,7 +39,10 @@ class Link
 
     public function __construct($json = null)
     {
-        if ($json && $json instanceof \stdClass) {
+        if ($json) {
+            if (!$json instanceof \stdClass) {
+                throw new \InvalidArgumentException();
+            }
             $this->makeFromLinkObject($json);
         }
     }
@@ -131,6 +134,5 @@ class Link
             $this->data = $json->data;
         }
     }
-
 
 }

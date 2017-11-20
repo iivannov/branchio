@@ -2,6 +2,7 @@
 
 namespace Iivannov\Branchio;
 
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use Iivannov\Branchio\Exceptions\BranchioDuplicateLinkException;
 use Iivannov\Branchio\Exceptions\BranchioException;
@@ -49,12 +50,12 @@ class Client
      * Client constructor.
      * @param string $key
      */
-    public function __construct($key, $secret)
+    public function __construct($key, $secret, ClientInterface $client = null)
     {
         $this->key = $key;
         $this->secret = $secret;
 
-        $this->http = new \GuzzleHttp\Client();
+        $this->http = $client ?? new \GuzzleHttp\Client();
     }
 
     /**
@@ -93,7 +94,6 @@ class Client
         }
 
         $result = json_decode($response->getBody()->getContents());
-
         return new Link($result);
     }
 
