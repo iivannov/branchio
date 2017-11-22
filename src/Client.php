@@ -25,18 +25,6 @@ class Client
     protected $secret;
 
     /**
-     * The campaign name
-     * @var string
-     */
-    protected $campaign;
-
-    /**
-     * The channel name
-     * @var string
-     */
-    protected $channel;
-
-    /**
      * The http client used for communication
      *
      * @var \GuzzleHttp\ClientInterface
@@ -56,22 +44,6 @@ class Client
         $this->secret = $secret;
 
         $this->http = $client ?? new \GuzzleHttp\Client();
-    }
-
-    /**
-     * @param string $campaign
-     */
-    public function setCampaign($campaign)
-    {
-        $this->campaign = $campaign;
-    }
-
-    /**
-     * @param string $channel
-     */
-    public function setChannel($channel)
-    {
-        $this->channel = $channel;
     }
 
 
@@ -100,52 +72,16 @@ class Client
     /**
      * Create a single link
      *
-     * For detailed information about different options:
-     * @see https://github.com/BranchMetrics/branch-deep-linking-public-api#creating-a-deep-linking-url
-     * @see https://dev.branch.io/getting-started/configuring-links/guide/#redirect-customization
-     *
-     * @param null $data optional :
-     *      The dictionary to embed with the link.
-     *
-     * @param null $alias optional (max 128 characters) :
-     *      Instead of our standard encoded short url, you can specify the alias of the link bnc.lt/alexaustin.
-     *      Aliases are enforced to be unique per domain (bnc.lt, yourapp.com, etc).
-     *      Be careful, link aliases are unique, immutable objects that cannot be deleted.
-     *
-     * @param null $type optional
-     *      - Set type to 1, to make the URL a one-time use URL. It won't deep link after 1 successful deep link.
-     *      - Set type to 2 to make a Marketing URL. These are URLs that are displayed under the Marketing tab on the dashboard
-     *      - Default is set to 0, which is the standard Branch links created via our SDK.git
-     *
-     *
-     * @throws \Exception
+     * @param Link $link
+     * @return mixed
+     * @throws \Throwable
      */
-    public function createLink($data = null, $alias = null, $type = null)
+    public function createLink(Link $link)
     {
-        $payload = [
-            'branch_key' => $this->key,
-        ];
 
-
-        if ($this->campaign) {
-            $payload['campaign'] = $this->campaign;
-        }
-
-        if ($this->channel) {
-            $payload['channel'] = $this->channel;
-        }
-
-        if ($data) {
-            $payload['data'] = $data;
-        }
-
-        if ($alias) {
-            $payload['alias'] = $alias;
-        }
-
-        if ($type) {
-            $payload['type'] = $type;
-        }
+        $payload = array_merge($link->toArray(), [
+            'branch_key' => $this->key
+        ]);
 
         try {
             $response = $this->http->post(self::API_URL . 'url', ['json' => $payload]);
@@ -163,28 +99,12 @@ class Client
     }
 
 
-    public function updateLink($url, $data = null, $type = null)
+    public function updateLink($url, Link $link)
     {
-        $payload = [
+        $payload = array_merge($link->toArray(), [
             'branch_key' => $this->key,
             'branch_secret' => $this->secret,
-        ];
-
-        if ($this->campaign) {
-            $payload['campaign'] = $this->campaign;
-        }
-
-        if ($this->channel) {
-            $payload['channel'] = $this->channel;
-        }
-
-        if ($data) {
-            $payload['data'] = $data;
-        }
-
-        if ($type) {
-            $payload['type'] = $type;
-        }
+        ]);
 
         $url = urlencode($url);
 

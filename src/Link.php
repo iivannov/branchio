@@ -9,12 +9,8 @@ class Link
     /**
      * @var string
      */
-    public $alias;
+    public $channel;
 
-    /**
-     * @var int
-     */
-    public $type = 0;
 
     /**
      * @var string
@@ -24,17 +20,43 @@ class Link
     /**
      * @var string
      */
-    public $channel;
+    public $campaign;
 
     /**
      * @var string
      */
-    public $campaign;
+    public $stage;
 
     /**
-     * @var \stdClass
+     * @var array
+     */
+    public $tags;
+
+    /**
+     * @var string
+     */
+    public $alias;
+
+    /**
+     * @var int
+     */
+    public $type = 0;
+
+    /**
+     * @var array
      */
     public $data;
+
+
+    private $properties = [
+        'channel',
+        'feature',
+        'campaign',
+        'stage',
+        'tags',
+        'alias',
+        'type'
+    ];
 
 
     public function __construct($json = null)
@@ -45,6 +67,52 @@ class Link
             }
             $this->makeFromLinkObject($json);
         }
+    }
+
+    /**
+     * @param string $channel
+     * @return Link
+     */
+    public function setChannel(string $channel): Link
+    {
+        $this->channel = $channel;
+        return $this;
+    }
+
+    /**
+     * @param string $feature
+     * @return Link
+     */
+    public function setFeature(string $feature): Link
+    {
+        $this->feature = $feature;
+        return $this;
+    }
+
+    /**
+     * @param string $campaign
+     * @return Link
+     */
+    public function setCampaign(string $campaign): Link
+    {
+        $this->campaign = $campaign;
+        return $this;
+    }
+
+    /**
+     * @param string $stage
+     * @return Link
+     */
+    public function setStage(string $stage): Link
+    {
+        $this->stage = $stage;
+        return $this;
+    }
+
+    public function setTags(array $tags): Link
+    {
+        $this->tags = $tags;
+        return $this;
     }
 
     /**
@@ -68,36 +136,6 @@ class Link
     }
 
     /**
-     * @param string $feature
-     * @return Link
-     */
-    public function setFeature(string $feature): Link
-    {
-        $this->feature = $feature;
-        return $this;
-    }
-
-    /**
-     * @param string $channel
-     * @return Link
-     */
-    public function setChannel(string $channel): Link
-    {
-        $this->channel = $channel;
-        return $this;
-    }
-
-    /**
-     * @param string $campaign
-     * @return Link
-     */
-    public function setCampaign(string $campaign): Link
-    {
-        $this->campaign = $campaign;
-        return $this;
-    }
-
-    /**
      * @param array $data
      * @return Link
      */
@@ -107,31 +145,23 @@ class Link
         return $this;
     }
 
+    public function toArray()
+    {
+        $array = [];
+
+        foreach ($this->properties as $property) {
+            $array[$property] = $this->{$property};
+        }
+
+        return $array;
+    }
 
     private function makeFromLinkObject(\stdClass $json)
     {
-        if (isset($json->alias)) {
-            $this->alias = $json->alias;
-        }
-
-        if (isset($json->type)) {
-            $this->type = $json->type;
-        }
-
-        if (isset($json->feature)) {
-            $this->feature = $json->feature;
-        }
-
-        if (isset($json->channel)) {
-            $this->channel = $json->channel;
-        }
-
-        if (isset($json->campaign)) {
-            $this->campaign = $json->campaign;
-        }
-
-        if (isset($json->data)) {
-            $this->data = $json->data;
+        foreach ($this->properties as $property) {
+            if (isset($json->{$property})) {
+                $this->{$property} = $json->{$property};
+            }
         }
     }
 
