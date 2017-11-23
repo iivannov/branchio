@@ -55,7 +55,8 @@ class Link
         'stage',
         'tags',
         'alias',
-        'type'
+        'type',
+        'data'
     ];
 
 
@@ -145,11 +146,14 @@ class Link
         return $this;
     }
 
-    public function toArray()
+    public function toArray($ignore = [])
     {
         $array = [];
 
         foreach ($this->properties as $property) {
+            if(in_array($property, $ignore)) {
+                continue;
+            }
             $array[$property] = $this->{$property};
         }
 

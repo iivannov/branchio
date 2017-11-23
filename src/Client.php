@@ -101,7 +101,9 @@ class Client
 
     public function updateLink($url, Link $link)
     {
-        $payload = array_merge($link->toArray(), [
+        // Not all parameters of a link can be updated
+        // The type and the alias can't be updated and thus are ignored
+        $payload = array_merge($link->toArray(['type', 'alias']), [
             'branch_key' => $this->key,
             'branch_secret' => $this->secret,
         ]);
