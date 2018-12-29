@@ -89,8 +89,8 @@ $link->setTags(['foo', 'bar']);
 
  
 // It's possible to chain the set methods
-$link->setChannel('Channel name');
-    ->setAlias('foobar123');
+$link->setChannel('Channel name')
+    ->setAlias('foobar123')
     ->setTags(['foo', 'bar']);
     
 ```
