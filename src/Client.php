@@ -32,7 +32,7 @@ class Client
     protected $http;
 
 
-    const API_URL = 'https://api.branch.io/v1/';
+    const API_URL = 'https://api2.branch.io/v1/';
 
     /**
      * Client constructor.
