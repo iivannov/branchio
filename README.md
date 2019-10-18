@@ -58,7 +58,7 @@ $link = $client->getLink($url);
 ### Create new link
 ```
 
-$link = new new \Iivannov\Branchio\Link();
+$link = new \Iivannov\Branchio\Link();
  
 $link->setChannel('foo')
     ->setAlias('foobar123')
@@ -80,7 +80,7 @@ $client->createLink($link);
 Link instance contains all the configurable options for a Branch Metrics link and provides method to set them.
 
 ```
-$link = new new \Iivannov\Branchio\Link();
+$link = new \Iivannov\Branchio\Link();
  
 // Set parameters separately
 $link->setChannel('Channel name');
@@ -89,8 +89,8 @@ $link->setTags(['foo', 'bar']);
 
  
 // It's possible to chain the set methods
-$link->setChannel('Channel name');
-    ->setAlias('foobar123');
+$link->setChannel('Channel name')
+    ->setAlias('foobar123')
     ->setTags(['foo', 'bar']);
     
 ```
@@ -183,7 +183,10 @@ $client->createLink($link);
 To update an already existing link you need to pass the url of the link and the updated `Link` instance to the  `updateLink` method
 
 ```
-$client->updateLink($url, $data, $type);
+$client = new \Iivannov\Branchio\Client(KEY, SECRET);
+$link = $client->getLink($url);
+$link->setChannel('bar');
+$client->updateLink($url, $link);
 ```
 
 
