@@ -8,6 +8,7 @@ use Iivannov\Branchio\Exceptions\BranchioDuplicateLinkException;
 use Iivannov\Branchio\Exceptions\BranchioException;
 use Iivannov\Branchio\Exceptions\BranchioForbiddenException;
 use Iivannov\Branchio\Exceptions\BranchioNotFoundException;
+use Iivannov\Branchio\Exceptions\BranchioUnavailableException;
 
 class Client
 {
@@ -129,6 +130,9 @@ class Client
         }
         if ($ex->getCode() == 409) {
             return new BranchioDuplicateLinkException();
+        }
+        if ($ex->getCode() == 503) {
+            return new BranchioUnavailableException();
         }
         return BranchioException::makeFromResponse($ex);
     }
