@@ -221,7 +221,7 @@ If you are using Laravel, the package contains a Service Provider and a Facade f
 
 ```
 Branchio::getLink($url)
-Branchio::createLink($link')
+Branchio::createLink($link)
 Branchio::updateLink($url, $link)
 ```
 
